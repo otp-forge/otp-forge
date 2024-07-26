@@ -8,7 +8,7 @@
   "scripts": {
     "lint": "tsc",
     "build": "tsup index.ts --format cjs,esm --dts",
-    "release": "pnpm run build && changeset publish --access public"
+    "release": "pnpm run build && changeset publish"
   },
   "repository": {
     "type": "git",
