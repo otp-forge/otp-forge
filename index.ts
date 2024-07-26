@@ -12,4 +12,4 @@ function verify(userId: string, purpose: number, enteredOtp: number): boolean {
 }
 
 // export the functions
-module.exports = { generate, verify };
+export { generate, verify };
