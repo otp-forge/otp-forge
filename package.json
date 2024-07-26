@@ -1,0 +1,37 @@
+{
+  "name": "otp-mgr",
+  "version": "0.0.1",
+  "description": "A nodejs library that handles the generation, storage and verification of OTPs.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "lint": "tsc",
+    "build": "tsup index.ts --format cjs,esm --dts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rushabhhere/otp-mgr.git"
+  },
+  "keywords": [
+    "otp",
+    "password",
+    "2fa",
+    "verify"
+  ],
+  "author": "Rushabh Javeri <rushabhworks247@gmail.com>",
+  "contributors": [
+    "Manan Gandhi <ardumanan@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rushabhhere/otp-mgr/issues"
+  },
+  "homepage": "https://github.com/rushabhhere/otp-mgr#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.7",
+    "@types/node": "^20.14.12",
+    "tsup": "^8.2.3",
+    "typescript": "^5.5.4"
+  }
+}
