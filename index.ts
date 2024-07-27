@@ -1,17 +1,58 @@
-const otpMap = new Map();
+import crypto from 'node:crypto';
 
-type Generate = (userId: string, purpose: number) => number;
-type Verify = (userId: string, purpose: number, enteredOtp: number) => boolean;
+interface Config {
+  purpose: string | number;
+  otpLength?: 4 | 5 | 6 | 7 | 8;
+  expirationTime: number;
+}
 
-const generate: Generate = (userId, purpose) => {
-  const otp = Math.floor(1000 + Math.random() * 9000);
-  otpMap.set(`${userId}:${purpose}`, otp);
-  return otp;
-};
+type UserId = string | number;
 
-const verify: Verify = (userId, purpose, enteredOtp) => {
-  const otp = otpMap.get(`${userId}:${purpose}`);
-  return otp === enteredOtp;
-};
+type GenerateFunction = (userId: UserId) => number;
+type VerifyFunction = (userId: UserId, enteredOtp: number) => boolean;
 
-export { generate, verify };
+class OTPManager {
+  constructor(private _config: Config) {
+    this._config.otpLength = this._config.otpLength ?? 6;
+  }
+
+  private _otpMap = new Map<string, [number, Date]>();
+
+  public generate: GenerateFunction = userId => {
+    const otpLength = this._config.otpLength as number;
+
+    const otp = crypto.randomInt(
+      Math.pow(10, otpLength - 1),
+      Math.pow(10, otpLength)
+    );
+
+    this._otpMap.set(`${this._config.purpose}:${userId}`, [
+      otp,
+      new Date(Date.now() + this._config.expirationTime),
+    ]);
+
+    // clean up once expired
+    setTimeout(() => {
+      this._otpMap.delete(`${this._config.purpose}:${userId}`);
+    }, this._config.expirationTime * 1000);
+
+    return otp;
+  };
+
+  public verify: VerifyFunction = (userId, enteredOtp) => {
+    const otp = this._otpMap.get(`${this._config.purpose}:${userId}`);
+
+    if (!otp) return false;
+
+    const [otpValue, expirationTime] = otp;
+
+    if (otpValue === enteredOtp && expirationTime > new Date()) {
+      this._otpMap.delete(`${userId}:${this._config.purpose}`);
+      return true;
+    }
+
+    return false;
+  };
+}
+
+export default OTPManager;
