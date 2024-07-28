@@ -67,7 +67,7 @@ class OTPManager {
 
     if (otpValue === enteredOtp && expirationTime > new Date()) {
       if (!this._config.store) {
-        this._otpMap.delete(`${userId}:${this._config.purpose}`);
+        this._otpMap.delete(`${this._config.purpose}:${userId}`);
       } else {
         await this._config.store.del(`${this._config.purpose}:${userId}`);
       }
