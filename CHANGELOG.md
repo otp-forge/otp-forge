@@ -1,5 +1,11 @@
 # otp-forge
 
+## 1.0.3
+
+### Patch Changes
+
+- a072c8c: Update Documentation
+
 ## 1.0.2
 
 ### Patch Changes
