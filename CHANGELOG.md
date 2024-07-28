@@ -1,5 +1,11 @@
 # otp-forge
 
+## 1.0.5
+
+### Patch Changes
+
+- bd840be: Fix bug with deletion
+
 ## 1.0.4
 
 ### Patch Changes
