@@ -12,9 +12,9 @@ abstract class OTPStore {
    * @param value
    * @param ttl OTP expiration time in seconds
    */
-  abstract set(key: string, value: number, ttl: number): Promise<null>;
+  abstract set(key: string, value: number, ttl: number): Promise<void>;
 
-  abstract del(key: string): Promise<null>;
+  abstract del(key: string): Promise<void>;
 }
 
 export default OTPStore;
