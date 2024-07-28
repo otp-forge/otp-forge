@@ -4,6 +4,9 @@ import OTPStore from "./utils/store_template";
 interface Config {
   purpose: string | number;
   otpLength?: 4 | 5 | 6 | 7 | 8;
+  /**
+   * Expiration time in seconds
+   */
   expirationTime: number;
   store?: OTPStore;
 }
