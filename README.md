@@ -77,5 +77,3 @@ We use [Semantic Versioning](http://semver.org/) for versioning.
 ## License
 
 This project is licensed under the [MIT License](https://license.md/licenses/mit-license/)
-
-#
