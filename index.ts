@@ -1,15 +1,17 @@
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
+import OTPStore from "./utils/store_template";
 
 interface Config {
   purpose: string | number;
   otpLength?: 4 | 5 | 6 | 7 | 8;
   expirationTime: number;
+  store?: OTPStore;
 }
 
 type UserId = string | number;
 
-type GenerateFunction = (userId: UserId) => number;
-type VerifyFunction = (userId: UserId, enteredOtp: number) => boolean;
+type GenerateFunction = (userId: UserId) => Promise<number>;
+type VerifyFunction = (userId: UserId, enteredOtp: number) => Promise<boolean>;
 
 class OTPManager {
   constructor(private _config: Config) {
@@ -18,7 +20,7 @@ class OTPManager {
 
   private _otpMap = new Map<string, [number, Date]>();
 
-  public generate: GenerateFunction = userId => {
+  public generate: GenerateFunction = async (userId) => {
     const otpLength = this._config.otpLength as number;
 
     const otp = crypto.randomInt(
@@ -26,28 +28,46 @@ class OTPManager {
       Math.pow(10, otpLength)
     );
 
-    this._otpMap.set(`${this._config.purpose}:${userId}`, [
-      otp,
-      new Date(Date.now() + this._config.expirationTime),
-    ]);
+    if (!this._config.store) {
+      this._otpMap.set(`${this._config.purpose}:${userId}`, [
+        otp,
+        new Date(Date.now() + this._config.expirationTime * 1000),
+      ]);
 
-    // clean up once expired
-    setTimeout(() => {
-      this._otpMap.delete(`${this._config.purpose}:${userId}`);
-    }, this._config.expirationTime * 1000);
+      // clean up once expired
+      setTimeout(() => {
+        this._otpMap.delete(`${this._config.purpose}:${userId}`);
+      }, this._config.expirationTime * 1000);
+    } else {
+      await this._config.store.set(
+        `${this._config.purpose}:${userId}`,
+        otp,
+        this._config.expirationTime
+      );
+    }
 
     return otp;
   };
 
-  public verify: VerifyFunction = (userId, enteredOtp) => {
-    const otp = this._otpMap.get(`${this._config.purpose}:${userId}`);
+  public verify: VerifyFunction = async (userId, enteredOtp) => {
+    let otp: [number, Date] | undefined;
+
+    if (!this._config.store) {
+      otp = this._otpMap.get(`${this._config.purpose}:${userId}`);
+    } else {
+      otp = await this._config.store.get(`${this._config.purpose}:${userId}`);
+    }
 
     if (!otp) return false;
 
     const [otpValue, expirationTime] = otp;
 
     if (otpValue === enteredOtp && expirationTime > new Date()) {
-      this._otpMap.delete(`${userId}:${this._config.purpose}`);
+      if (!this._config.store) {
+        this._otpMap.delete(`${userId}:${this._config.purpose}`);
+      } else {
+        await this._config.store.del(`${userId}:${this._config.purpose}`);
+      }
       return true;
     }
 
@@ -55,4 +75,4 @@ class OTPManager {
   };
 }
 
-export default OTPManager;
+export { OTPManager, OTPStore };

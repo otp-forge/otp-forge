@@ -1,5 +1,23 @@
 # otp-forge
 
+## 1.0.2
+
+### Patch Changes
+
+- 646f0f9: Fixed incorrect expiration time being stored in milliseconds instead of seconds
+
+## 1.0.1
+
+### Patch Changes
+
+- b3a64c0: Changed return type for OTPStore set and del functions to void.
+
+## 1.0.0
+
+### Major Changes
+
+- 026be59: Added support for external stores.
+
 ## 0.1.0
 
 ### Minor Changes
