@@ -1,5 +1,11 @@
 # otp-forge
 
+## 1.0.4
+
+### Patch Changes
+
+- deaf7f8: Fixed bug regarding deletion of OTP
+
 ## 1.0.3
 
 ### Patch Changes
