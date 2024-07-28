@@ -1,5 +1,11 @@
 # otp-forge
 
+## 1.0.1
+
+### Patch Changes
+
+- b3a64c0: Changed return type for OTPStore set and del functions to void.
+
 ## 1.0.0
 
 ### Major Changes
