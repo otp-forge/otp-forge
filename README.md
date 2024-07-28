@@ -11,8 +11,7 @@ your local machine for development and testing purposes.
 
 Requirements:
 
-- Node.js
-- NPM (Node.js package manager)
+- Node.js (version >= 16.0.0)
 
 Install with:
 
@@ -78,3 +77,5 @@ We use [Semantic Versioning](http://semver.org/) for versioning.
 ## License
 
 This project is licensed under the [MIT License](https://license.md/licenses/mit-license/)
+
+#
