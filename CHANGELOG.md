@@ -1,5 +1,11 @@
 # otp-forge
 
+## 1.0.2
+
+### Patch Changes
+
+- 646f0f9: Fixed incorrect expiration time being stored in milliseconds instead of seconds
+
 ## 1.0.1
 
 ### Patch Changes
