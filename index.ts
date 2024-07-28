@@ -31,7 +31,7 @@ class OTPManager {
     if (!this._config.store) {
       this._otpMap.set(`${this._config.purpose}:${userId}`, [
         otp,
-        new Date(Date.now() + this._config.expirationTime),
+        new Date(Date.now() + this._config.expirationTime * 1000),
       ]);
 
       // clean up once expired
