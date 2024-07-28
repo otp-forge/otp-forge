@@ -16,38 +16,55 @@ Requirements:
 
 Install with:
 
-    npm install @otp-forge/otp-forge
+NPM:
+
+```bash
+npm install @otp-forge/otp-forge
+```
+
+Yarn:
+
+```bash
+yarn add @otp-forge/otp-forge
+```
+
+PNPM:
+
+```bash
+pnpm add @otp-forge/otp-forge
+```
+
+pnpm
 
 ### How To Use
 
+Initialize the OTPManager with the required configuration options:
+
 ```javascript
-const otp = require('@otp-forge/otp-forge');
+const OTPManager = require("@otp-forge/otp-forge");
 
-const Purpose = {
-  Register: 1,
-  Login: 2,
-  ResetPassword: 3,
-  CricicalAction: 4,
-};
-
-const users = [
-  { id: 1, email: 'john@gmail.com' },
-  { id: 2, email: 'jane@gmail.com' },
-  { id: 3, email: 'charles@gmail.com' },
-];
-
-const otpForJohnLogin = otp.generate(users[0].id, Purpose.Login);
-
-console.log(otpForJohnLogin); // 4 digit OTP
-
-const isValid = otp.verify(users[0].id, Purpose.Login, otpForJohnLogin);
-
-console.log(isValid); // true
-
-const isValidJane = otp.verify(users[1].id, Purpose.Login, otpForJohnLogin);
-
-console.log(isValidJane); // false
+// In memory storage
+const passwordResetOTPManager = new OTPManager({
+  // Configuration options
+  purpose: "password-reset", // Purpose of the OTP
+  otpLength: 6, // Length of the OTP
+  expirationTime: 300, // Time to live in seconds
+});
 ```
+
+Generate an OTP:
+
+```typescript
+const otp: number = await passwordResetOTPManager.generateOTP();
+```
+
+Verify an OTP:
+
+```typescript
+const isValid: boolean = await passwordResetOTPManager.verifyOTP(otp);
+```
+
+**Warning**: The default store is in-memory, which means that the OTPs will be lost when the application is restarted. To use a persistent store, you can use one of the supported stores or build your own.
 
 ## Versioning
 
