@@ -1,5 +1,11 @@
 # otp-forge
 
+## 1.0.0
+
+### Major Changes
+
+- 026be59: Added support for external stores.
+
 ## 0.1.0
 
 ### Minor Changes
