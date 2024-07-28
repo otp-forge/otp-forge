@@ -69,7 +69,7 @@ class OTPManager {
       if (!this._config.store) {
         this._otpMap.delete(`${userId}:${this._config.purpose}`);
       } else {
-        await this._config.store.del(`${userId}:${this._config.purpose}`);
+        await this._config.store.del(`${this._config.purpose}:${userId}`);
       }
       return true;
     }
