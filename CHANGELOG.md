@@ -1,4 +1,4 @@
-# otp-mgr
+# otp-forge
 
 ## 0.1.0
 

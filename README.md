@@ -1,4 +1,4 @@
-# OTP Manager
+# OTP Forge
 
 A simple library for managing OTPs for all your applications. It helps with the generation, storage and verification of OTPs.
 
@@ -16,12 +16,12 @@ Requirements:
 
 Install with:
 
-    npm install otp-mgr
+    npm install @otp-forge/otp-forge
 
 ### How To Use
 
 ```javascript
-const otp = require('otp-mgr');
+const otp = require('@otp-forge/otp-forge');
 
 const Purpose = {
   Register: 1,
