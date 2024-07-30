@@ -8,7 +8,8 @@
   "scripts": {
     "lint": "tsc",
     "build": "tsup index.ts --format cjs,esm --dts",
-    "release": "pnpm run build && changeset publish"
+    "release": "pnpm run build && changeset publish",
+    "test": "vitest"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "@changesets/cli": "^2.27.7",
     "@types/node": "^20.14.12",
     "tsup": "^8.2.3",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "vitest": "^2.0.4"
   }
 }
